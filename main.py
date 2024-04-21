@@ -92,7 +92,7 @@ class App:
         selected_summary = self.packet_list.get(self.packet_list.curselection())
         packet = self.packet_dict[selected_summary] 
         command = self.entries["Comando"].get()
-        self.hijacker.inject_command(packet=packet, command=command, isServer=bool(self.isServer.get()))
+        self.hijacker.inject_command(packet=packet, command=command)
 
     def sniff_results(self):
         filter = f"tcp and port {self.entries['Puerto origen'].get()} and port 23"
@@ -118,3 +118,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
     root.mainloop()
+
