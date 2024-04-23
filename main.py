@@ -103,15 +103,15 @@ class App:
         result_root.title("Resultados encontrados")
         result_text = tk.Text(result_root, width=80, height=10)
         result_text.pack()
+        if packet.haslayer(Raw):
+            raw_text = packet[Raw].load.decode()
+            clean_text = re.sub(r'\[\d+;\d+H', '', raw_text)
+            clean_text = re.sub(r'(\d{2}/\d{2}/\d{4}  \d{2}:\d{2}[pa])', r'\n\1', clean_text)
+            clean_text = re.sub(r'(0 File\(s\))', r'\n\1', clean_text)
+            clean_text = re.sub(r'(\d+ Dir\(s\))', r'\n\1', clean_text)
+            clean_text = clean_text.replace('C:\\>', '').strip()
 
-        raw_text = packet[Raw].load.decode()
-        clean_text = re.sub(r'\[\d+;\d+H', '', raw_text)
-        clean_text = re.sub(r'(\d{2}/\d{2}/\d{4}  \d{2}:\d{2}[pa])', r'\n\1', clean_text)
-        clean_text = re.sub(r'(0 File\(s\))', r'\n\1', clean_text)
-        clean_text = re.sub(r'(\d+ Dir\(s\))', r'\n\1', clean_text)
-        clean_text = clean_text.replace('C:\\>', '').strip()
-
-        result_text.insert(tk.END, clean_text)
+            result_text.insert(tk.END, clean_text)
         result_root.mainloop()
 
 if __name__ == "__main__":
